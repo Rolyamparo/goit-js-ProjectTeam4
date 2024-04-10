@@ -1,7 +1,8 @@
-import axios from 'axios';
-import { BASE_URL, options } from './discovery-api.js';
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { throttle } from 'lodash';
+import axios from "axios";
+
+import { Notify } from "notiflix/build/notiflix-notify-aio";
+import { throttle } from "lodash";
+import { BASE_URL, options } from './js/discovery-api.js';
 
 console.log(BASE_URL)
 
@@ -90,7 +91,7 @@ async function inputEvent() {
 const pageNumbersUl = document.getElementById('page-numbers');
 const currentPageDiv = document.querySelector('.current-page');
 const nums = [...Array(30).keys()].slice(1);
-console.log(nums)
+// console.log(nums)
 
 function renderPageNumbers(startIndex) {
     pageNumbersUl.innerHTML = '';
@@ -174,6 +175,26 @@ async function renderEventByPage(e) {
   }
   
 }
+
+async function loadMore() {
+  options.params.page += 1;
+  try {
+    const res = await axios.get(BASE_URL, options);
+    const hits = res.data.hits;
+    renderGallery(hits);
+  } catch (err) {
+    Notify.failure(err);
+  }
+}
+
+function handleScroll() {
+  const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+  if (scrollTop + clientHeight >= scrollHeight) {
+    loadMore();
+  }
+}
+
+
 
 activePage.addEventListener("click", renderEventByPage) 
 
