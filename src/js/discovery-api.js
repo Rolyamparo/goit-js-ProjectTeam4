@@ -11,6 +11,6 @@ export const options = {
     keyword:'',
     safesearch: true,
     page: 0,
-    per_page: 40,
+    per_page: 16,
   },
 };
