@@ -10,7 +10,7 @@ export const options = {
     countryCode: "",
     keyword:'',
     safesearch: true,
-    page: 1,
+    page: 0,
     per_page: 40,
   },
 };
